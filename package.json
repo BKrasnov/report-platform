@@ -1,0 +1,25 @@
+{
+  "name": "report-platform",
+  "private": true,
+  "packageManager": "pnpm@9.12.1",
+  "scripts": {
+    "dev:api": "pnpm --filter @report-platform/api start:dev",
+    "dev:worker": "pnpm --filter @report-platform/api start:worker:dev",
+    "dev:web": "pnpm --filter @report-platform/web dev",
+    "dev:start": "pnpm exec concurrently -k -n BACKEND,WEB -c blue,green \"docker compose up --build\" \"pnpm dev:web\"",
+    "dev:stop": "docker compose down",
+    "build:full": "pnpm build && docker compose build",
+    "build": "pnpm -r build",
+    "build:web": "pnpm --filter @report-platform/web build",
+    "lint": "pnpm -r lint",
+    "test:web": "pnpm --filter @report-platform/web test",
+    "test": "pnpm -r test",
+    "test:e2e:web": "pnpm --filter @report-platform/web test:e2e",
+    "db:migrate": "pnpm --filter @report-platform/api db:migrate",
+    "db:seed": "pnpm --filter @report-platform/api db:seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "typescript": "^5.4.5"
+  }
+}

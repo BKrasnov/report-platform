@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@report-platform/shared": ["../../packages/shared/src/index.ts"]
+    },
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vitest/globals"],
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "strict": true,
+    "noEmit": true
+  },
+  "include": ["src", "tests/unit"]
+}
