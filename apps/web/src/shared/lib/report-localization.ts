@@ -10,8 +10,7 @@ const REPORT_TITLES: Record<string, string> = {
 };
 
 const REPORT_DESCRIPTIONS: Record<string, string> = {
-  'driver-medical-checks':
-    'Детализированная выгрузка медицинских проверок по периоду и компании.',
+  'driver-medical-checks': 'Детализированная выгрузка медицинских проверок по периоду и компании.',
   'company-summary': 'Сводная аналитика медицинских проверок по компании.',
 };
 

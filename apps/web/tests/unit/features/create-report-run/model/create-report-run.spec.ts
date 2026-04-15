@@ -84,7 +84,7 @@ describe('create-report-run feature', () => {
         to: '2026-01-31',
         companyId: '',
       },
-      [],
+      []
     );
 
     expect(validationMessage).toBeTruthy();

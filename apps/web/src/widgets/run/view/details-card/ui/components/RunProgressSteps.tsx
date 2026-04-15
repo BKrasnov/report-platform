@@ -43,7 +43,9 @@ export const RunProgressSteps = ({ status }: RunProgressStepsProps): JSX.Element
           >
             {step}
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
+          <Box
+            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}
+          >
             <Typography fontSize="0.875rem" fontWeight={700}>
               {label}
             </Typography>

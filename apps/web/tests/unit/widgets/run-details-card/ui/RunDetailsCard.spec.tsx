@@ -2,6 +2,7 @@ import type { ReportRunView } from '@report-platform/shared';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
+import { formatDateTime } from '@/shared/lib/date';
 import { Run } from '@/widgets/run';
 
 const run: ReportRunView = {
@@ -121,5 +122,27 @@ describe('RunDetailsCard', () => {
     expect(screen.getByTestId('run-step-loader-2')).toBeDefined();
     expect(screen.queryByTestId('run-step-loader-1')).toBeNull();
     expect(screen.queryByTestId('run-step-loader-3')).toBeNull();
+  });
+
+  it('formats started and finished timestamps the same way as created', () => {
+    const isoTimestamp = '2026-04-15T12:47:59.943Z';
+    const expected = formatDateTime(isoTimestamp);
+
+    render(
+      <Run.View.DetailsCard
+        run={{
+          ...run,
+          createdAt: isoTimestamp,
+          startedAt: isoTimestamp,
+          finishedAt: isoTimestamp,
+        }}
+        state="ready"
+        isDownloading={false}
+        canDownload={true}
+        onDownload={vi.fn(async () => undefined)}
+      />
+    );
+
+    expect(screen.getAllByText(expected)).toHaveLength(3);
   });
 });

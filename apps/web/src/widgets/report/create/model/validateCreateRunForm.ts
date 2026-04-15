@@ -6,7 +6,7 @@ import { isValidIsoDate, isValidUuid, toUtcTimestamp } from '@/shared/lib/valida
 
 export function validateCreateRunForm(
   form: CreateRunForm,
-  companies: CompanyView[],
+  companies: CompanyView[]
 ): string | null {
   const name = form.name.trim();
   if (!name) {

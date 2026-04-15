@@ -29,7 +29,7 @@ describe('RunsTable', () => {
         runs={[run]}
         getRunDetailsHref={(runId) => `/runs/${runId}`}
         openRunDetails={openRunDetails}
-      />,
+      />
     );
 
     const row = screen.getByText(run.id).closest('tr');
@@ -50,7 +50,7 @@ describe('RunsTable', () => {
         runs={[run]}
         getRunDetailsHref={(runId) => `/runs/${runId}`}
         openRunDetails={openRunDetails}
-      />,
+      />
     );
 
     fireEvent.click(screen.getByRole('link', { name: run.id }));
@@ -66,7 +66,7 @@ describe('RunsTable', () => {
         runs={[run]}
         getRunDetailsHref={(runId) => `/runs/${runId}`}
         openRunDetails={vi.fn(async () => undefined)}
-      />,
+      />
     );
 
     expect(screen.getByText('April run')).toBeDefined();
@@ -79,7 +79,7 @@ describe('RunsTable', () => {
         runs={[{ ...run, id: 'daaf2952-171a-4c98-add6-988eaf57105a', name: null }]}
         getRunDetailsHref={(runId) => `/runs/${runId}`}
         openRunDetails={vi.fn(async () => undefined)}
-      />,
+      />
     );
 
     expect(screen.getByText('Медосмотры водителей #daaf2952')).toBeDefined();

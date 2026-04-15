@@ -57,6 +57,12 @@ export class ReportCreateFormVM extends ViewModelBase<ReportCreateFormPayload> {
   }
 
   @action.bound
+  setDateRange(from: string, to: string): void {
+    this.from = from;
+    this.to = to;
+  }
+
+  @action.bound
   setCompanyId(value: string): void {
     this.companyId = value;
   }

@@ -15,8 +15,8 @@ export const RunDownloadSection = ({
 }: RunDownloadSectionProps): JSX.Element => (
   <>
     <Typography color="text.secondary" fontSize="0.95rem">
-      Скачивание станет доступно после успешного завершения. Статус обновляется автоматически
-      каждые 5 секунд.
+      Скачивание станет доступно после успешного завершения. Статус обновляется автоматически каждые
+      5 секунд.
     </Typography>
 
     <DownloadReportArtifact.Button

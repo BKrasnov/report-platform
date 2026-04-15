@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 import { Report } from '@/widgets/report';
@@ -25,7 +25,7 @@ describe('ReportCreateForm', () => {
     ];
 
     render(
-      <Report.Create.Form companies={companies} isSubmitting={false} onCreateRun={onCreateRun} />,
+      <Report.Create.Form companies={companies} isSubmitting={false} onCreateRun={onCreateRun} />
     );
 
     expect(screen.getByTestId('company-select')).toBeDefined();
@@ -35,7 +35,7 @@ describe('ReportCreateForm', () => {
   it('reacts to submitting state changes', () => {
     const onCreateRun = vi.fn();
     const { rerender } = render(
-      <Report.Create.Form companies={[]} isSubmitting={false} onCreateRun={onCreateRun} />,
+      <Report.Create.Form companies={[]} isSubmitting={false} onCreateRun={onCreateRun} />
     );
 
     const submitButton = screen.getByTestId('create-run-button') as HTMLButtonElement;
@@ -44,5 +44,23 @@ describe('ReportCreateForm', () => {
     rerender(<Report.Create.Form companies={[]} isSubmitting={true} onCreateRun={onCreateRun} />);
 
     expect(submitButton.disabled).toBe(true);
+  });
+
+  it('applies seed date preset to form fields', () => {
+    const onCreateRun = vi.fn();
+
+    render(<Report.Create.Form companies={[]} isSubmitting={false} onCreateRun={onCreateRun} />);
+
+    const fromInput = screen.getByTestId('from-input') as HTMLInputElement;
+    const toInput = screen.getByTestId('to-input') as HTMLInputElement;
+
+    expect(fromInput.value).toBe('');
+    expect(toInput.value).toBe('');
+    expect(screen.getByText('Данные из seed 01–08.04.2026')).toBeDefined();
+
+    fireEvent.click(screen.getByTestId('date-preset-seed'));
+
+    expect(fromInput.value).toBe('2026-04-01');
+    expect(toInput.value).toBe('2026-04-08');
   });
 });

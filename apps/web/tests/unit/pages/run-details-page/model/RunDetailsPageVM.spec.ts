@@ -45,7 +45,10 @@ describe('RunDetailsPageVM', () => {
     };
     const download = vi.fn().mockResolvedValue(undefined);
 
-    const vm = new RunDetailsPageVM({ runsStore, download }, createTestViewModelParams({ runId: '' }));
+    const vm = new RunDetailsPageVM(
+      { runsStore, download },
+      createTestViewModelParams({ runId: '' })
+    );
 
     await vm.load('run-1');
 
@@ -234,9 +237,11 @@ describe('RunDetailsPageVM', () => {
     vi.useFakeTimers();
     const runsStore = {
       getById: vi.fn().mockReturnValue(null),
-      loadById: vi.fn().mockImplementation((runId: string) => {
-        return Promise.resolve(createRun(REPORT_RUN_STATUSES.queued, { id: runId }));
-      }),
+      loadById: vi
+        .fn()
+        .mockImplementation((runId: string) =>
+          Promise.resolve(createRun(REPORT_RUN_STATUSES.queued, { id: runId }))
+        ),
     };
     const vm = new RunDetailsPageVM(
       { runsStore, download: vi.fn() },

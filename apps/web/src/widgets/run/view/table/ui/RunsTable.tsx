@@ -13,6 +13,7 @@ import {
 import type { RunsTableProps } from '../model/types';
 
 import { ReportRun, reportRunModel } from '@/entities/report-run';
+import { formatDateTime } from '@/shared/lib/date';
 import { getReportTitle, getRunDisplayName } from '@/shared/lib/report-localization';
 import { withViewState } from '@/shared/lib/with-view-state';
 
@@ -89,7 +90,7 @@ const RunsTableBase = ({
                   label={reportRunModel.model.getStatusLabel(run.status)}
                 />
               </TableCell>
-              <TableCell>{new Date(run.createdAt).toLocaleString('ru-RU')}</TableCell>
+              <TableCell>{formatDateTime(run.createdAt)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

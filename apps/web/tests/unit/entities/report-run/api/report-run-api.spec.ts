@@ -66,7 +66,7 @@ describe('report-run-api', () => {
       '/api/report-runs/run-1',
       expect.objectContaining({
         headers: expect.objectContaining({ 'content-type': 'application/json' }),
-      }),
+      })
     );
   });
 });
