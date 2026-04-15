@@ -1,99 +1,120 @@
 # Report Platform
 
-MVP for asynchronous report generation with backend + frontend applications in a pnpm workspace.
+MVP-платформа для асинхронной генерации отчетов. Проект организован как `pnpm` workspace с backend, frontend и общим пакетом типов/схем.
 
-## Stack
+## Технологии
 
-- `NestJS`
-- `TypeORM`
+- `NestJS` + `TypeORM`
 - `PostgreSQL`
-- `Vitest`
-- `React`
-- `Vite`
-- `Playwright`
-- `exceljs`
-- `pdfkit`
-- `pnpm` workspaces
+- `React` + `Vite`
+- `Vitest` + `Playwright`
+- Генерация артефактов: `exceljs`, `pdfkit`
 
-## Workspace
+## Структура репозитория
 
 ```text
-apps/api
-apps/web
-packages/shared
+apps/api        # backend API + worker
+apps/web        # frontend
+packages/shared # общие типы, константы и схемы
 ```
 
-## Local Commands
+## Требования
+
+- `Node.js` 20+
+- `pnpm` 9+
+- `Docker` + `Docker Compose` (для запуска через контейнеры)
+
+## Быстрый старт
+
+1. Установить зависимости:
 
 ```bash
 pnpm install
-pnpm build
-pnpm test
 ```
 
-Run API and worker locally:
-
-```bash
-pnpm dev:api
-pnpm dev:worker
-```
-
-Run frontend locally:
-
-```bash
-pnpm dev:web
-```
-
-Run everything with one command:
+2. Запустить backend (PostgreSQL + init + API + worker) и frontend одной командой:
 
 ```bash
 pnpm dev:start
 ```
 
-Stop all docker services:
+После запуска:
+
+- Frontend: `http://localhost:5173`
+- API: `http://localhost:5173/api`
+
+Остановка контейнеров:
 
 ```bash
 pnpm dev:stop
 ```
 
-Build app + docker images in one command:
+## Работа с базой данных
+
+Применить миграции:
+
+```bash
+pnpm db:migrate
+```
+
+Заполнить тестовыми данными:
+
+```bash
+pnpm db:seed
+```
+
+## Полезные команды
+
+Сборка всех пакетов:
+
+```bash
+pnpm build
+```
+
+Полная сборка проекта + docker-образов:
 
 ```bash
 pnpm build:full
 ```
 
-Database helpers:
+Линтинг:
 
 ```bash
-pnpm db:migrate
-pnpm db:seed
+pnpm lint
 ```
 
-Frontend URL:
+Тесты:
 
-- Web: `http://localhost:5173`
+```bash
+pnpm test
+pnpm test:web
+pnpm test:e2e:web
+```
 
 ## Docker Compose
+
+Запуск:
 
 ```bash
 docker compose up --build
 ```
 
-Services:
+Сервисы:
 
-- Init (one-shot migrations + seed): `report-platform-init-1`
-- API: `http://localhost:3000`
-- Swagger: `http://localhost:3000/docs`
+- `postgres` — база данных
+- `init` — одноразовый контейнер (миграции + сидирование)
+- `api` — HTTP API (`127.0.0.1:3000`)
+- `worker` — обработка очереди отчетов
 
-## Demo Flow
+## Пример API-флоу
 
-List reports:
+Получить список доступных отчетов:
 
 ```bash
 curl http://localhost:3000/api/reports
 ```
 
-Create a report run:
+Создать запуск отчета:
 
 ```bash
 curl -X POST http://localhost:3000/api/report-runs \
@@ -101,24 +122,24 @@ curl -X POST http://localhost:3000/api/report-runs \
   -d "{\"reportId\":\"driver-medical-checks\",\"params\":{\"from\":\"2026-04-01\",\"to\":\"2026-04-13\"}}"
 ```
 
-Check status:
+Проверить статус:
 
 ```bash
 curl http://localhost:3000/api/report-runs/<runId>
 ```
 
-Download artifact:
+Скачать артефакт:
 
 ```bash
 curl -OJ http://localhost:3000/api/report-runs/<runId>/download
 ```
 
-## Reports
+## Поддерживаемые отчеты
 
-- `driver-medical-checks` -> XLSX row-level export
-- `company-summary` -> PDF aggregate report
+- `driver-medical-checks` — детальный XLSX по медосмотрам водителей
+- `company-summary` — агрегированный PDF по компании
 
-## Notes
+## Дополнительно
 
-- Report artifacts are stored in a local/shared volume under `storage/reports`.
-- Production-oriented limitations and extension points are documented in [ARCHITECTURE.md](ARCHITECTURE.md).
+- Артефакты отчетов сохраняются в `storage/reports` (или в docker volume `report_artifacts`).
+- Ограничения текущего MVP и направления развития описаны в [ARCHITECTURE.md](ARCHITECTURE.md).
